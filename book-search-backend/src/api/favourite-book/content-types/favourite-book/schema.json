@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "favourite_books",
+  "info": {
+    "singularName": "favourite-book",
+    "pluralName": "favourite-books",
+    "displayName": "Favourite Book"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "favourite_books"
+    },
+    "book": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::book.book"
+    }
+  }
+}
