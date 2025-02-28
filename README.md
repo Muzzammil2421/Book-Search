@@ -4,7 +4,7 @@ BookSearch is a full-stack application that allows users to search for books, ma
 - **book-search-frontend**: Built with Angular 19 (module-based, not standalone) and Bootstrap for UI.
 - **book-search-backend**: Developed using Strapi 5, running on Node.js 22 with authentication via JWT.
 
-The database is managed using MySQL, and users must create a schema and import the dataset.
+The database is managed using MySQL, and users must create a schema and manually enter the dataset.
 
 ## Table of Contents
 - [Installation and Setup](#installation-and-setup)
@@ -24,7 +24,7 @@ The database is managed using MySQL, and users must create a schema and import t
 ### Database Setup
 1. Ensure MySQL is installed and running.
 2. Create a new schema named `book-search` in MySQL.
-3. Import the provided SQL file (`book-search.sql`) into the database:
+3. Run the provided SQL file (`book-search.sql`) to create tables only:
    ```bash
    mysql -u root -p book-search < book-search.sql
    ```
@@ -43,10 +43,23 @@ The database is managed using MySQL, and users must create a schema and import t
    ```bash
    npm install --force
    ```
+3. Build the admin panel using:
+   ```bash
+   npm rub build
+   ```
+
 3. Start the backend server (make sure you have checked the #configuration section):
    ```bash
    npm run develop
    ```
+4. Log in to Strapi admin and create the necessary entries manually.
+5. Enable APIs:
+   - Go to **Content-Builder** and create entries.
+   - In **Public permissions**, enable `find` and `findOne` for **books**.
+   - In **Private permissions**, enable `find`, `findOne`, and `delete` for **favourite-books**.
+   - In **User permissions.user**, allow all actions for authenticated users.
+   - Save the changes.
+   - If you're unsure, refer to the [Strapi documentation](https://docs.strapi.io/).
 
 By default, the backend will run on `http://localhost:1337`.
 
@@ -122,7 +135,6 @@ Follow the setup instructions from [@bztes/strapi-provider-email-gmail-api](http
 - **Angular CLI Documentation:** [Angular CLI Overview](https://angular.dev/tools/cli)
 - **Strapi Documentation:** [Strapi Docs](https://docs.strapi.io/)
 - **Gmail API Provider for Strapi:** [@bztes/strapi-provider-email-gmail-api](https://www.npmjs.com/package/@bztes/strapi-provider-email-gmail-api)
-
 
 This project provides a comprehensive book search experience with authentication, favorites management, and email confirmations. Follow the setup instructions carefully to get started!
 
