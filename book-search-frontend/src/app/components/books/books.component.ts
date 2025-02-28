@@ -4,6 +4,7 @@ import { BooksService } from '../../services/books.service';
 import { Book } from '../../models/book-model';
 import { AuthService } from '../../auth/auth.service';
 import { FavoritesService } from '../../services/favorites.service';
+import { NotificationService } from '../../auth/notification.service';
 
 @Component({
   selector: 'app-books',
@@ -24,16 +25,19 @@ export class BooksComponent {
     private route: ActivatedRoute,
     private bookService: BooksService,
     private _authService: AuthService,
-    private favoritesService:FavoritesService
+    private favoritesService: FavoritesService,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
-    this._authService.me().subscribe(userData => {
-      this.user = userData;
-      this.favoritesService.getFavouriteBooks(this.user.id).subscribe({
+    this._authService.user.subscribe((userData: any) => {
+      this.user = userData.user;
+      this.favoritesService.getAllFavouriteBooks(this.user.id).subscribe({
         next: (response: any) => {
-          console.log(response);
-        }
+          this.favorites = response.data
+            .map((fav: any) => fav.book)
+            .filter((book: any) => book !== null);
+        },
       });
     });
     this.route.queryParams.subscribe((params) => {
@@ -52,11 +56,27 @@ export class BooksComponent {
   }
 
   addToFavorites(book: Book): void {
+    this.favoritesService.addToFavouriteBooks(this.user.id, book.id).subscribe({
+      next: (response: any) => {
+        this.notificationService.showSuccess(
+          `Book "${book.title}" added to favorites.`,
+          'Success'
+        );
+        this.favorites.push(book);
+      },
+      error: (err: any) => {
+        this.notificationService.showError(
+          'Got an error while adding book to favorites.',
+          'Error'
+        );
+      },
+    });
   }
 
   fetchBooks(): void {
     this.loading = true;
-    this.bookService.searchBooks(this.searchQuery, this.currentPage, this.itemsPerPage)
+    this.bookService
+      .searchBooks(this.searchQuery, this.currentPage, this.itemsPerPage)
       .subscribe({
         next: (response: any) => {
           this.books = response.data;
@@ -66,7 +86,7 @@ export class BooksComponent {
         error: (err: any) => {
           this.error = err.message || 'An error occurred while fetching books.';
           this.loading = false;
-        }
+        },
       });
   }
 

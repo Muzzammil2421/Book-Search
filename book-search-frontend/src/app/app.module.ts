@@ -15,6 +15,8 @@ import { HomeComponent } from './components/home/home.component';
 import { FavouritesComponent } from './components/favourites/favourites.component';
 import { BooksComponent } from './components/books/books.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 @NgModule({
   declarations: [
@@ -29,6 +31,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     ToastrModule.forRoot(),
     HttpClientModule,

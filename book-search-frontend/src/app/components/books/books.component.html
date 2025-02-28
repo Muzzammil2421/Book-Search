@@ -4,20 +4,19 @@
   </div>
 </div>
 
-<main *ngIf="!loading" role="main">
+<main *ngIf="!loading" role="main" class="main-container">
   <section class="jumbotron text-center">
     <div class="container">
       <h1 class="jumbotron-heading">
         Search Result for "{{ searchQuery.toUpperCase() }}"
       </h1>
       <p class="lead text-muted">
-        Something short and leading about the collection below—its contents, the
-        creator, etc.
+        Discover a curated collection of books handpicked for avid readers. Search, explore, and add your favorites to build your personal library!
       </p>
     </div>
   </section>
 
-  <div class="album py-5 bg-light">
+  <div *ngIf="books.length > 0; else noFavorites" class="album py-5 bg-light">
     <div class="container">
       <div class="row">
         <div
@@ -59,6 +58,7 @@
                   >
                     Add to Favorites
                   </button>
+                  <p *ngIf="user &&isFavorite(book)">Added To Favourites.</p>
                 </div>
               </div>
             </div>
@@ -75,4 +75,18 @@
       </pagination-controls>
     </div>
   </div>
+  <ng-template #noFavorites>
+    <div class="text-center py-5">
+      <img
+        src="assets/empty-bookshelf.png"
+        alt="No books found"
+        class="img-fluid"
+        width="200"
+      />
+      <h3 class="mt-3">No books found for query "{{searchQuery}}".</h3>
+      <p class="text-muted">
+        Search for books using search bar.
+      </p>
+    </div>
+  </ng-template>
 </main>

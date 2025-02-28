@@ -50,13 +50,14 @@ export class SignUpComponent implements OnInit {
   handleSuccessfullSignUp(response: any) {
     const navigationExtras: NavigationExtras = { state: { data: 'Congratulations! An email for confirmation has been sent to your email address.' } };
     this.router.navigate(['login'], navigationExtras);
+    this.loading = false;
   }
 
   handleErrorSignUp(error: any) {
     let e = error;
-    e = e.error ? e.error : e;
-    this.error = e.message || error.error.data[0].messages[0].message;
+    this.error = e.error.error.message;
     this.error = this.error ? this.error : 'An error occurred.';
+    console.log("Here");
     this.loading = true;
   }
 }

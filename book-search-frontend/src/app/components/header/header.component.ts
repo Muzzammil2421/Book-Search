@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../auth/auth.service';
 import { Router } from '@angular/router';
 import { AuthResponse } from '../../models/auth-response.model';
+import { NotificationService } from '../../auth/notification.service';
 
 @Component({
   selector: 'app-header',
@@ -10,7 +11,8 @@ import { AuthResponse } from '../../models/auth-response.model';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent implements OnInit {
-  constructor(private _authService: AuthService, private router: Router) { }
+  constructor(private _authService: AuthService, private router: Router,
+     private notificationService : NotificationService) { }
   user: AuthResponse | null = null;
   ngOnInit(): void {
     this._authService.user.subscribe(userData => {
@@ -21,6 +23,7 @@ export class HeaderComponent implements OnInit {
   handleLoginOrSignOut() {
     if(this.user) {
       this._authService.signOut();
+      this.notificationService.showInfo("You are logged out.", "Info");
     } else {
       this.router.navigate(['/login']);
     }

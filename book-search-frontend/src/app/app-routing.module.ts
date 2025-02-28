@@ -27,10 +27,7 @@ const routes: Routes = [
   {
     path: 'favourites',
     component: FavouritesComponent,
-    // canActivate: [AuthGuard],
-    children: [
-      
-    ]
+    canActivate: [AuthGuard],
   },
   {
     path: '',

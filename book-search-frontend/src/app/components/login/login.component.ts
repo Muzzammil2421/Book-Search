@@ -4,6 +4,7 @@ import { AuthService } from '../../auth/auth.service';
 import { Router } from "@angular/router"
 import { ErrorService } from '../../auth/error.service';
 import { AuthResponse } from '../../models/auth-response.model';
+import { NotificationService } from '../../auth/notification.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,8 @@ export class LoginComponent implements OnInit {
   signedUpMessage!: string;
   loading:boolean=false;
   user: AuthResponse | null = null;
-  constructor(private fb: FormBuilder, private _authService: AuthService, private router: Router, private _errorService: ErrorService) {
+  constructor(private fb: FormBuilder, private _authService: AuthService,
+     private router: Router, private _errorService: ErrorService, private notificationService : NotificationService) {
     this._authService.user.subscribe(userData => {
       this.user = userData;
     });
@@ -58,6 +60,7 @@ export class LoginComponent implements OnInit {
 
    successfullLogin(response : any) {
     this._authService.setUser(response);
+    this.notificationService.showSuccess("Login Successfully", "Success");
     this.router.navigate(["/favourites"]);
    }
 
