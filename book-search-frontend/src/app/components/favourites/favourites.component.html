@@ -1,0 +1,68 @@
+<div *ngIf="loading" class="loading-container">
+  <div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+
+<main *ngIf="!loading" role="main">
+  <section class="jumbotron text-center">
+    <div class="container">
+      <h1 class="jumbotron-heading">
+        Search Result for "{{ searchQuery.toUpperCase() }}"
+      </h1>
+      <p class="lead text-muted">
+        Something short and leading about the collection below—its contents, the
+        creator, etc. Make it short and sweet, but not too short so folks don't
+        simply skip over it entirely.
+      </p>
+    </div>
+  </section>
+
+  <div class="album py-5 bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4" *ngFor="let book of books">
+          <div class="card mb-4 box-shadow">
+            <img
+              class="card-img-top img-fluid"
+              [src]="
+                book.image_url
+                  ? book.image_url
+                  : 'data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22348%22%20height%3D%22225%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20348%20225%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_195494a7c01%20text%20%7B%20fill%3A%23eceeef%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A17pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_195494a7c01%22%3E%3Crect%20width%3D%22348%22%20height%3D%22225%22%20fill%3D%22%2355595c%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22116.70000076293945%22%20y%3D%22120.18000011444092%22%3EThumbnail%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E'
+              "
+              [alt]="book.title"
+            />
+            <div class="card-body">
+              <h5 class="card-title">{{ book.title }}</h5>
+              <p class="card-text">
+                <strong>Author:</strong> {{ book.author }}<br />
+                <strong>Year:</strong> {{ book.year_of_publication }}<br />
+                <strong>Publisher:</strong> {{ book.publisher }}
+              </p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <!-- <button
+                    *ngIf="user && !isFavorite(book)"
+                    type="button"
+                    class="btn btn-sm btn-outline-secondary"
+                    (click)="addToFavorites(book)"
+                  >
+                    Add to Favorites
+                  </button> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <pagination-controls
+        [directionLinks]="true"
+        boundaryLinks="true"
+        [autoHide]="true"
+        (pageChange)="pageChanged($event)"
+        class="d-flex justify-content-center mt-4"
+      >
+      </pagination-controls>
+    </div>
+  </div>
+</main>

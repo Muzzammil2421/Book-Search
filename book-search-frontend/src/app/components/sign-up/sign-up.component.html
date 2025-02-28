@@ -1,0 +1,153 @@
+<section class="vh-100">
+  <div *ngIf="!loading" class="d-flex justify-content-center my-3">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+  <div *ngIf="loading" class="container-fluid h-custom">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="container-fluid w-75 header pt-3">
+        <div class="d-flex flex-column align-items-start mt-1">
+          <div class="d-flex align-items-center">
+            <span id="line-span"></span>
+            <h2 class="fw-bold px-1">Signup</h2>
+          </div>
+          <p>
+            Signup to get access to our library of books.
+            <br />
+          </p>
+        </div>
+        <hr />
+      </div>
+      <div
+        *ngIf="error"
+        class="container-fluid w-75 alert alert-danger mt-2 alert-dismissible fade show"
+        role="alert"
+      >
+        <strong>{{ error }}</strong>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="col-md-9 col-lg-6 col-xl-5">
+        <img
+          src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+          class="img-fluid"
+          alt="Sample image"
+        />
+      </div>
+      <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+        <form [formGroup]="form">
+          <div class="form-outline mb-4">
+            <input
+              type="text"
+              id="name"
+              formControlName="name"
+              class="form-control form-control-lg"
+              placeholder="Enter your name"
+            />
+            <label class="form-label" for="name">Name</label>
+            <div
+              *ngIf="
+                form.controls['name'].invalid &&
+                (form.controls['name'].dirty || form.controls['name'].touched)
+              "
+            >
+              <div
+                *ngIf="form.controls['name'].errors?.['required']"
+                class="text-danger"
+              >
+                Name is required.
+              </div>
+              <div
+                *ngIf="form.controls['name'].errors?.['pattern']"
+                class="text-danger"
+              >
+                Name must contain alphabets only.
+              </div>
+            </div>
+          </div>
+
+          <div class="form-outline mb-4">
+            <input
+              type="email"
+              id="email"
+              formControlName="email"
+              class="form-control form-control-lg"
+              placeholder="Enter a valid email address"
+            />
+            <label class="form-label" for="email">Email address</label>
+            <div
+              *ngIf="
+                form.controls['email'].invalid &&
+                (form.controls['email'].dirty || form.controls['email'].touched)
+              "
+            >
+              <div
+                *ngIf="form.controls['email'].errors?.['required']"
+                class="text-danger"
+              >
+                Email is required.
+              </div>
+              <div
+                *ngIf="form.controls['email'].errors?.['email']"
+                class="text-danger"
+              >
+                Please enter valid email address.
+              </div>
+            </div>
+          </div>
+
+          <div class="form-outline mb-3">
+            <input
+              type="password"
+              id="password"
+              formControlName="password"
+              class="form-control form-control-lg"
+              placeholder="Enter password"
+            />
+            <label class="form-label" for="password">Password</label>
+            <div
+              *ngIf="
+                form.controls['password'].invalid &&
+                (form.controls['password'].dirty ||
+                  form.controls['password'].touched)
+              "
+            >
+              <div
+                *ngIf="form.controls['password'].errors?.['required']"
+                class="text-danger"
+              >
+                Password is required.
+              </div>
+              <div
+                *ngIf="form.controls['password'].errors?.['minlength']"
+                class="text-danger"
+              >
+                Password must be at least 8 characters long.
+              </div>
+            </div>
+          </div>
+
+          <div class="text-center text-lg-start mt-4 pt-2">
+            <button
+              type="button"
+              class="btn btn-primary btn-lg"
+              style="padding-left: 2.5rem; padding-right: 2.5rem"
+              (click)="submit()"
+            >
+              Signup
+            </button>
+            <p class="small fw-bold mt-2 pt-1 mb-0">
+              Already have an account?
+              <a href="#!" routerLink="/login" class="link-danger">Login</a>
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
